@@ -30,8 +30,7 @@ payload = {
     "temperature": 0.1
 }
 
-
-api_url = f"{azure_oai_endpoint}/openai/deployments/ai-secure-lab001/chat/completions?api-version=2023-05-15"
+api_url = azure_oai_endpoint
 
 response = requests.post(api_url, headers=headers, json=payload)
 response_data = response.json()
