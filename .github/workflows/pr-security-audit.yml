@@ -1,11 +1,11 @@
 name: Azure Infrastructure Security & AI Remediation
-on: [pull_request] #triggers the Ai
+on: [pull_request] 
 
 jobs:
   security-audit:
     runs-on: ubuntu-latest
     permissions:
-      pull-requests: write  #script can leave comments
+      pull-requests: write 
     steps:
       - uses: actions/checkout@v4
 
@@ -13,7 +13,7 @@ jobs:
         uses: bridgecrewio/checkov-action@master
         with:
           directory: .
-          soft_fail: true #allows Ai to run
+          soft_fail: true 
 
       - name: Invoke Azure OpenAI Auto-Remediation
         env:
