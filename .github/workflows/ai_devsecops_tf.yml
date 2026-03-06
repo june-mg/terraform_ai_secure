@@ -1,0 +1,26 @@
+name: Azure Infrastructure Security & AI Remediation
+on: [pull_request] #triggers the Ai
+
+jobs:
+  security-audit:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write  #script can leave comments
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Execute Static Code Analysis (Checkov)
+        uses: bridgecrewio/checkov-action@master
+        with:
+          directory: .
+          soft_fail: true #allows Ai to run
+
+      - name: Invoke Azure OpenAI Auto-Remediation
+        env:
+          AZURE_OPENAI_KEY: ${{ secrets.AZURE_OPENAI_KEY }}
+          AZURE_OPENAI_ENDPOINT: ${{ secrets.AZURE_OPENAI_ENDPOINT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          pip install requests
+          python invoke_llm_review.py

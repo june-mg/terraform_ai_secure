@@ -6,7 +6,7 @@ resource "azurerm_resource_group" "lab001" {
 
 # Storage account
 resource "azurerm_storage_account" "notsecure" {
-  name                     = "aisecuritylab001" 
+  name                     = "aisecuritylab001"
   resource_group_name      = azurerm_resource_group.lab001.name
   location                 = azurerm_resource_group.lab001.location
   account_tier             = "Standard"
